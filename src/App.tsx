@@ -2,25 +2,11 @@ import React, { FC, ChangeEvent, useState } from "react";
 import "./App.css";
 import TodoTask from "./components/TodoTasks";
 import { ITask } from "./components/TodoTasks";
+import {Button} from "./Button";
 
 const App: FC = () => {
     const [task, setTask] = useState<string>("");
     const [todoList, setTodoList] = useState<ITask[]>([]);
-
-    const setUpdate = (updatedTask:string,id:number) => {
-        setTodoList(
-            todoList.filter((task) => {
-                if(task.id == id) {
-                    return task.taskName = updatedTask
-                }
-            })
-        )
-    }
-    const handleUpdate = (event:ChangeEvent<HTMLInputElement>):void =>{
-        if (event.target.name === "upd") {
-            setTask(event.target.value);
-        }
-    }
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         if (event.target.name === "task") {
@@ -59,17 +45,17 @@ const App: FC = () => {
 
     return (
         <div className="App">
-            <h1 className="header">todoist</h1>
+            <h1 className="header">todoit</h1>
             <div className="taskInput">
                 <h3>Create a task:</h3>
                 <div className="inputBox">
                 <input type="text" placeholder="Task..." name="task" value={task} onChange={handleChange}/>
-                <button onClick={addTask}>Add Task</button>
+                    <button onClick={addTask}>Add Task</button>
                 </div>
             </div>
             <div className="todoList" style={hiddenList}>
             {todoList.map((task: ITask,id:number) => {
-                    return <TodoTask key={id} task={task} completeTask={completeTask} deleteTask={deleteTask}/>;
+                    return <TodoTask key={id} task={task} completeTask={completeTask} deleteTask={deleteTask} todoList={todoList}/>;
                 })}
             </div>
         </div>
